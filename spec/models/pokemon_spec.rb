@@ -19,4 +19,17 @@ RSpec.describe Pokemon do
 
   end
 
+  describe "#save" do
+    context "when be valid" do
+      let(:pokemon) { Pokemon.new name: "mew" }
+      it { expect { pokemon.save! }.not_to raise_exception }
+      it { expect { pokemon.save }.to change { Pokemon.count }.by 1 }
+    end
+    context "when be invalid" do
+      let(:pokemon) { Pokemon.new name: nil }
+      it { expect { pokemon.save! }.to raise_exception ActiveRecord::RecordInvalid }
+      it { expect { pokemon.save }.not_to change { Pokemon.count } }
+    end
+  end
+
 end
