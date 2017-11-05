@@ -11,7 +11,7 @@ class Pokemon < ApplicationRecord
   validates :name, :type1, presence: true
   validates :type1, inclusion: { in: TYPES }
   validates :type2, inclusion: { in: TYPES, allow_blank: true }
-  validates :skills_count, numericality: { maximum: 4 }
+  validate :validate_skills_count
 
   TYPE_CONVERTE_SET = {
     "Normal" => ["ノーマル", "のーまる", "普通"],
@@ -27,8 +27,9 @@ class Pokemon < ApplicationRecord
     super value
   end
 
-  def skills_count
-    puts self.skills.length
-    self.skills.length
+  protected
+
+  def validate_skills_count
+    errors.add :skills, :invalid unless (1..4).member? self.skills.length
   end
 end
