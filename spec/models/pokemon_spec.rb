@@ -1,35 +1,74 @@
 require 'rails_helper'
 
-RSpec.describe Pokemon do
+RSpec.describe Pokemon, type: :model do
 
-  describe "is valid" do
-    let(:pokemon) { Pokemon.new name: name }
-    subject { pokemon }
-
-    context "with name" do
-      let(:name) { "mew" }
-      it { is_expected.to be_valid }
-      it { expect(pokemon.name).to eq name }
-    end
+  describe "validates" do
 
     context "without name" do
-      let(:name) { nil }
+      subject { build :pokemon, name: nil }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "without type1" do
+      subject { build :pokemon, type1: nil }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "without type2" do
+      subject { build :pokemon, type2: nil }
+      it { is_expected.to be_valid }
+    end
+
+    context "with type2" do
+      subject { build :pokemon, type2: "Water" }
+      it { is_expected.to be_valid }
+    end
+
+    context "with incorrect type as type1" do
+      subject { build :pokemon, type1: "Bot" }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "with incorrect type as type2" do
+      subject { build :pokemon, type2: "Bot" }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "with 5 skills" do
+      subject { build :pokemon, skills: build_list(:skill, 5) }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "with 4 skills" do
+      subject { build :pokemon, skills: build_list(:skill, 4) }
+      it { is_expected.to be_valid }
+    end
+
+    context "with 0 skills" do
+      subject { build :pokemon, skills: [] }
       it { is_expected.not_to be_valid }
     end
 
   end
 
-  describe "#save" do
-    context "when be valid" do
-      let(:pokemon) { Pokemon.new name: "mew" }
-      it { expect { pokemon.save! }.not_to raise_exception }
-      it { expect { pokemon.save }.to change { Pokemon.count }.by 1 }
+  describe "#typeN=" do # N = 1 or 2
+
+    context "when provide as Japanese name" do
+      before { subject.type1 = "ひこう" }
+      it { expect(subject.type1).to eq "Flying" }
     end
-    context "when be invalid" do
-      let(:pokemon) { Pokemon.new name: nil }
-      it { expect { pokemon.save! }.to raise_exception ActiveRecord::RecordInvalid }
-      it { expect { pokemon.save }.not_to change { Pokemon.count } }
+
+    context "when provide as Japanese name with invalid kana" do
+      before { subject.type1 = "どらごん" }
+      it { expect(subject.type1).to eq "Dragon" }
     end
+
+  end
+
+  describe "association: has many Skill" do
+    let(:skill) { build :skill }
+    subject { build :pokemon, skills: [skill] }
+    it { is_expected.to be_valid }
   end
 
 end
