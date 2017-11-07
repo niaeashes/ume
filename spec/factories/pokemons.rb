@@ -2,6 +2,7 @@ FactoryBot.define do
 
   factory :pokemon do
     name "Mew"
+    basename "Mew"
     type1 "Psychic"
     type2 nil
     speed 131

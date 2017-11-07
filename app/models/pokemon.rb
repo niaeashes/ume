@@ -8,9 +8,11 @@ class Pokemon < ApplicationRecord
 
   has_many :skills
 
-  validates :name, :type1, presence: true
+  validates :name, :type1, :basename, presence: true
+  validates :basename, length: { in: 2..12 }
   validates :type1, inclusion: { in: TYPES }
   validates :type2, inclusion: { in: TYPES, allow_blank: true }
+  validates :speed, numericality: { greater_than: 0, less_than_or_equal_to: 500 }
   validate :validate_skills_count
 
   TYPE_CONVERTE_SET = {

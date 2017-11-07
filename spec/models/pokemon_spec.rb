@@ -27,7 +27,7 @@ RSpec.describe Pokemon, type: :model do
     end
 
     context "with too short basename" do
-      subject { build :pokemon, basename: "A"*2 }
+      subject { build :pokemon, basename: "A"*1 }
       it { is_expected.not_to be_valid }
     end
 
