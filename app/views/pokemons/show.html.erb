@@ -1,0 +1,5 @@
+<h1><%= @pokemon.name %> <small><%= @pokemon.basename %></small></h1>
+
+<p>
+<%= [@pokemon.type1, @pokemon.type2].compact.map.with_index({ |type, index| "Type#{index}: #{type}" }).join(" / ") %>
+</p>

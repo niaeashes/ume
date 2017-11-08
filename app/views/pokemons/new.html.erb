@@ -1,0 +1,27 @@
+<h1>New Pokemon</h1>
+
+<% if @pokemon.errors %>
+  <ul>
+    <% @pokemon.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @pokemon do |f| %>
+  <div>
+    <label for="pokemon-name">Name: <%= f.text_field :name, id: "pokemon-name" %></label>
+  </div>
+  <div>
+    <label for="pokemon-basename">Basename: <%= f.text_field :basename, id: "pokemon-basename" %></label>
+  </div>
+  <div>
+    <label for="pokemon-type1">Type1: <%= f.text_field :type1, id: "pokemon-type1" %></label>
+  </div>
+  <div>
+    <label for="pokemon-type2">Type2: <%= f.text_field :type2, id: "pokemon-type1" %></label>
+  </div>
+  <div>
+    <%= f.submit "Register" %>
+  </div>
+<% end %>

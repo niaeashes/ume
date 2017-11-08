@@ -15,6 +15,8 @@ class Pokemon < ApplicationRecord
   validates :speed, numericality: { greater_than: 0, less_than_or_equal_to: 500 }
   validate :validate_skills_count
 
+  after_initialize { self.speed ||= 1 }
+
   TYPE_CONVERTE_SET = {
     "Normal" => ["ノーマル", "のーまる", "普通"],
     "Flying" => ["ひこう", "ヒコウ", "鳥"],
