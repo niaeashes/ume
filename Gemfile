@@ -55,6 +55,7 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'guard'
   gem 'guard-rspec'
 end
