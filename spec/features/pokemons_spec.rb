@@ -10,6 +10,25 @@ RSpec.describe "Pokemons Resource", type: :request do
     end
   end
 
+  describe "GET /pokemons" do
+    it do
+      create :pokemon, name: "Eevee"
+      get '/pokemons'
+      expect(response.body).to match "Eevee"
+    end
+    it do
+      create :pokemon, name: "Mew"
+      get '/pokemons'
+      expect(response.body).to match "Mew"
+    end
+
+    it do
+      get '/pokemons'
+      expect(response.body).not_to match "Eevee"
+      expect(response.body).not_to match "Mew"
+    end
+  end
+
   describe "POST /pokemons" do
 
     def send_request

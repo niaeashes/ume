@@ -23,6 +23,10 @@ class Pokemon < ApplicationRecord
     "Dragon" => ["ドラゴン", "どらごん", "竜"]
   }
 
+  TYPES.each do |type|
+    define_method("#{type.downcase}?") { type1 == type || type2 == type }
+  end
+
   def type1=value
     @_target_patterns ||= TYPE_CONVERTE_SET.values.flatten
     TYPE_CONVERTE_SET.each do |key, list|

@@ -1,6 +1,10 @@
 class PokemonsController < ApplicationController
   before_action :set_pokemon, only: :show
 
+  def index
+    @pokemons = Pokemon.all
+  end
+
   def show
   end
 

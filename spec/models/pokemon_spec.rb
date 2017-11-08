@@ -120,4 +120,16 @@ RSpec.describe Pokemon, type: :model do
     it { is_expected.to be_valid }
   end
 
+  describe "normal?" do
+    context "when normal type pokemon" do
+      subject { build :pokemon, type1: "Normal" }
+      it { is_expected.to be_normal }
+    end
+
+    context "when dragon type pokemon" do
+      subject { build :pokemon, type1: "Dragon" }
+      it { is_expected.not_to be_normal }
+    end
+  end
+
 end
